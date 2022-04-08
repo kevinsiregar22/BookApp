@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 // import {Home, Login, Register, DetailBooks} from '../screens';
 
 //screens
@@ -9,14 +9,34 @@ import Login from '../screens/Login';
 import Success from '../screens/Success';
 import Register from '../screens/Register';
 import DetailBooks from '../screens/DetailBooks';
+import NetInfo from '@react-native-community/netinfo';
+import {checkConnection} from '../store/globalAction';
+import {useDispatch, useSelector} from 'react-redux';
 
 // import {useSelector} from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const mainStack = () => {
+  const dispatch = useDispatch;
+
+  useEffect(() => {
+    isConnect();
+  }, [isConnect]);
+
+  const isConnect = () => {
+    NetInfo.fetch()
+      .then(state => {
+        // return checkConnection(state.type);
+        return checkConnection(state.isConnected);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
-    <Stack.Navigator initialRouteName="Success">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Login"
         component={Login}

@@ -1,4 +1,7 @@
 import {allReducers} from './allReducers';
-import {createStore} from 'redux';
+import logger from 'redux-logger';
+import {createStore, applyMiddleware} from 'redux';
 
-export const store = createStore(allReducers);
+const allMiddleware = applyMiddleware(logger);
+
+export const store = createStore(allReducers, {}, allMiddleware);

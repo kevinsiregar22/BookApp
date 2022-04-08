@@ -1,13 +1,6 @@
-export const setRecommended = data => {
+export const SetRecommendeds = data => {
   return {
     type: 'SET_RECOMMENDED',
-    payload: data,
-  };
-};
-
-export const setLatest = data => {
-  return {
-    type: 'SET_POPULAR',
     payload: data,
   };
 };

@@ -1,25 +1,35 @@
 const initialState = {
-  dataEmail: '',
-  dataPassword: '',
+  email: '',
+  password: '',
+  token: '',
+  name: '',
 };
 
-export const loginReducer = (state = initialState, action) => {
+const LoginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_EMAIL':
+    case 'SET_LOGIN_EMAIL':
       return {
         ...state,
-        dataEmail: action.payload,
+        email: action.payload,
       };
-
-    case 'SET_PASSWORD':
+    case 'SET_LOGIN_PASSWORD':
       return {
         ...state,
-        dataPassword: action.payload,
+        password: action.payload,
       };
-
+    case 'SET_TOKEN':
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case 'SET_NAME':
+      return {
+        ...state,
+        name: action.payload,
+      };
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
+
+export default LoginReducer;

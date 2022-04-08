@@ -1,14 +1,14 @@
-// import {detailReducer} from '../screens/Detail/redux/reducer';
-// import {homeReducer} from '../screens/Home/redux/reducer';
-import {loginReducer} from '../screens/Login/redux/reducer';
-import {registerReducer} from '../screens/Registrasi/redux/reducer';
-import {global} from './globalReducer';
 import {combineReducers} from 'redux';
+import BookDetailReducer from '../screens/DetailBooks/redux/reducer';
+import HomeReducer from '../screens/Home/redux/reducer';
+import LoginReducer from '../screens/Login/redux/reducer';
+import RegisterReducer from '../screens/Register/redux/reducer';
+import {globalReducer} from './globalReducer';
 
 export const allReducers = combineReducers({
-  //   detail: detailReducer,
-  //   home: homeReducer,
-  login: loginReducer,
-  //   register: registerReducer,
-  //   global: global, //global: global
+  login: LoginReducer,
+  home: HomeReducer,
+  register: RegisterReducer,
+  bookdetail: BookDetailReducer,
+  Global: globalReducer,
 });

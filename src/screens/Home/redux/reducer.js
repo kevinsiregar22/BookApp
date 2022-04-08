@@ -1,24 +1,17 @@
 const initialState = {
-  listRecommended: [],
-  listPopular: [],
+  recommendeds: [{}],
 };
 
-export const homeReducer = (state = initialState, action) => {
+const HomeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_RECOMMENDED':
       return {
         ...state,
-        listRecommended: action.payload,
-      };
-
-    case 'SET_POPULAR':
-      return {
-        ...state,
-        listPopular: action.payload,
+        recommendeds: action.payload,
       };
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 };
+
+export default HomeReducer;
