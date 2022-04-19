@@ -10,66 +10,156 @@ import {
 import React from 'react';
 import {ms} from 'react-native-size-matters';
 import axios from 'axios';
-import {REGISTER_API} from '../../helpers/baseAPI';
 import {useDispatch, useSelector} from 'react-redux';
-import {SetUsername, SetPassword, SetEmail} from './redux/action';
+import {
+  setRegisterName,
+  setRegisterEmail,
+  setRegisterPassword,
+} from './redux/action';
+
+import {Button, Input} from '@rneui/base';
+import {colors} from '../../utils';
+import {navigate} from '../../helpers/navigate';
+import {API} from '../../config/API';
 
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
   const {email, password, name} = useSelector(state => state.register);
 
-  const body = {
+  const payload = {
     email: email,
     password: password,
     name: name,
   };
 
-  const register = async () => {
+  const postRegister = async () => {
     try {
-      const res = await axios.post(`${REGISTER_API}`, body);
+      const res = await axios.post(
+        API.BASE_API.concat('/auth/register'),
+        payload,
+      );
+      console.log(res, 'resul');
       if (res.status <= 201);
       Alert.alert('Register Succes');
       navigation.navigate('Login');
       // navigation.navigate('Success');
     } catch (error) {
+      console.log('gaaal');
       console.log(error);
     }
   };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{justifyContent: 'center', flex: 1, marginTop: 80}}>
-        <View style={{backgroundColor: 'aqua', flex: 1}}></View>
-        <TextInput
-          style={styles.item}
-          onChangeText={item => dispatch(SetUsername(item))}
-          item={name}
-          placeholder="Fullname"
-        />
-        <TextInput
-          style={styles.item}
-          onChangeText={item => dispatch(SetEmail(item))}
-          item={email}
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
-        <TextInput
-          style={styles.item}
-          onChangeText={item => dispatch(SetPassword(item))}
-          item={password}
-          placeholder="Password"
-          secureTextEntry={true}
-        />
-        <TouchableOpacity style={styles.button} onPress={register}>
-          <Text style={styles.buttonText}>REGISTER</Text>
-        </TouchableOpacity>
+      <Input
+        inputStyle={{fontSize: 18, paddingVertical: 15}}
+        inputContainerStyle={{
+          borderTopWidth: 1,
+          borderBottomWidth: 1,
+          borderLeftWidth: 1,
+          borderRightWidth: 1,
+          borderRightWidth: 1,
+          borderColor: colors.border.color,
+          borderRadius: 10,
+        }}
+        containerStyle={{paddingTop: 20, marginTop: 20}}
+        leftIconContainerStyle={{
+          marginRight: 8,
+          marginLeft: 10,
+        }}
+        placeholder="Username"
+        leftIcon={{
+          type: 'font-awesome-5',
+          name: 'user-alt',
+          size: 24,
+          color: colors.icon.color,
+        }}
+        onChangeText={text => dispatch(setRegisterName(text))}
+      />
+      <Input
+        inputStyle={{fontSize: 18, paddingVertical: 15}}
+        inputContainerStyle={{
+          borderTopWidth: 1,
+          borderBottomWidth: 1,
+          borderLeftWidth: 1,
+          borderRightWidth: 1,
+          borderRightWidth: 1,
+          borderColor: colors.border.color,
+          borderRadius: 10,
+        }}
+        // containerStyle={{paddingTop: 20, marginTop: 0}}
+        leftIconContainerStyle={{
+          marginRight: 8,
+          marginLeft: 10,
+        }}
+        placeholder="Email"
+        leftIcon={{
+          type: 'material-icons',
+          name: 'email',
+          size: 30,
+          color: colors.icon.color,
+        }}
+        onChangeText={text => dispatch(setRegisterEmail(text))}
+      />
 
-        <Text style={styles.text}>Don't have an account?</Text>
+      <Input
+        inputStyle={{
+          fontSize: 18,
+          paddingVertical: 15,
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}
+        inputContainerStyle={{
+          borderTopWidth: 1,
+          borderBottomWidth: 1,
+          borderLeftWidth: 1,
+          borderRightWidth: 1,
+          borderRightWidth: 1,
+          borderColor: colors.border.color,
+          borderRadius: 10,
+        }}
+        // containerStyle={{
+        //   marginTop: 7,
+        // }}
+        leftIconContainerStyle={{
+          marginRight: 8,
+          marginLeft: 10,
+        }}
+        placeholder="Password"
+        leftIcon={{
+          type: 'font-awesome-5',
+          name: 'key',
+          size: 30,
+          color: colors.icon.color,
+        }}
+        onChangeText={text => dispatch(setRegisterPassword(text))}
+        secureTextEntry={true}
+      />
+      <Button
+        onPress={postRegister}
+        buttonStyle={{
+          padding: 15,
+          borderRadius: 10,
+          backgroundColor: colors.button.background,
+        }}
+        containerStyle={{
+          paddingHorizontal: 10,
+          marginTop: 25,
+        }}
+        titleStyle={{
+          fontSize: 24,
+          letterSpacing: 5,
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}
+        title="REGISTER"
+      />
 
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.textlogin}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.text}>Don't have an account?</Text>
+
+      <TouchableOpacity onPress={() => navigate('Login')}>
+        <Text style={styles.textlogin}>Login</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -78,7 +168,7 @@ export default Index;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#D6EAFF',
+    backgroundColor: colors.backgroundPage,
     flex: 1,
   },
   logo: {

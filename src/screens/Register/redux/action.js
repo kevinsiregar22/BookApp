@@ -1,20 +1,19 @@
-export const SetUsername = data => {
+export const setRegisterName = data => {
   return {
-    type: 'SET_NAME',
+    type: 'SET_REGISTER_NAME',
+    payload: data,
+  };
+};
+export const setRegisterEmail = data => {
+  return {
+    type: 'SET_REGISTER_EMAIL',
     payload: data,
   };
 };
 
-export const SetPassword = data => {
+export const setRegisterPassword = data => {
   return {
-    type: 'SET_PASSWORD',
-    payload: data,
-  };
-};
-
-export const SetEmail = data => {
-  return {
-    type: 'SET_EMAIL',
+    type: 'SET_REGISTER_PASSWORD',
     payload: data,
   };
 };

@@ -10,7 +10,11 @@ const Poppins = ({type = 'Regular', children, color = 'black', size = 14}) => {
       fontSize: size,
     },
   });
-  return <Text style={style.text}>{children}</Text>;
+  return (
+    <Text testID="text component" style={style.text}>
+      {children}
+    </Text>
+  );
 };
 
 export default Poppins;

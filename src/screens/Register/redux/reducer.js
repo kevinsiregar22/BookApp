@@ -1,30 +1,29 @@
 const initialState = {
+  name: '',
   email: '',
   password: '',
-  name: '',
 };
 
 const RegisterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_NAME':
+    case 'SET_REGISTER_NAME':
       return {
         ...state,
         name: action.payload,
       };
-    case 'SET_PASSWORD':
-      return {
-        ...state,
-        password: action.payload,
-      };
-    case 'SET_EMAIL':
+    case 'SET_REGISTER_EMAIL':
       return {
         ...state,
         email: action.payload,
       };
-    default:
+    case 'SET_REGISTER_PASSWORD':
       return {
         ...state,
+        password: action.payload,
       };
+
+    default:
+      return state;
   }
 };
 

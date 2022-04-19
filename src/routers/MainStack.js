@@ -36,7 +36,7 @@ const mainStack = () => {
   };
 
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Register">
       <Stack.Screen
         name="Login"
         component={Login}

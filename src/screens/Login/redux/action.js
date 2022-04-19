@@ -1,27 +1,27 @@
-export const SetLoginEmail = data => {
+export const setLoginEmail = data => {
   return {
     type: 'SET_LOGIN_EMAIL',
-    payload: data,
+    email: data,
   };
 };
 
-export const SetLoginPassword = data => {
+export const setLoginPassword = data => {
   return {
     type: 'SET_LOGIN_PASSWORD',
-    payload: data,
+    password: data,
   };
 };
 
-export const SetToken = data => {
+export const setToken = data => {
   return {
     type: 'SET_TOKEN',
-    payload: data,
+    token: data,
   };
 };
 
 export const setName = data => {
   return {
     type: 'SET_NAME',
-    payload: data,
+    name: data,
   };
 };
