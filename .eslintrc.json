@@ -14,7 +14,14 @@
   },
   "plugins": ["react", "react-native"],
   "rules": {
-    "no-unused-vars": "error",
-    "no-console": "error"
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "no-unused-vars": [
+      "error",
+      {"vars": "all", "args": "after-used", "ignoreRestSiblings": false}
+    ],
+    "no-console": "error",
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"]
   }
 }

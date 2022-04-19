@@ -10,11 +10,12 @@
     "lint": "eslint .",
     "prepare": "husky install",
     "postversion": "react-native-version",
-    "published": "np"
+    "published": "np",
+    "build:release": "cd android && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew bundleRelease assembleRelease && cd .."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kevinsiregar22/BookApp.git"
+    "url": "git+https://github.com/kevinsiregar22/BookApp.git"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -59,6 +60,7 @@
     "husky": "^7.0.4",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.67.0",
+    "react-native-version": "^4.0.0",
     "react-test-renderer": "17.0.2"
   },
   "jest": {
