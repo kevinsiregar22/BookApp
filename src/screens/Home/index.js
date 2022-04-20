@@ -13,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import {setLoading} from '../../store/globalAction';
 import {BOOKS_API} from '../../helpers/baseAPI';
 import Poppins from '../../components/Poppins';
-// import {navigate} from '../../helpers/navigate';
+import {navigate} from '../../helpers/navigate';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Index = ({navigation}) => {
@@ -66,9 +66,7 @@ const Index = ({navigation}) => {
         data={recommendeds}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('DetailBooks', {datas: item.id})
-            }>
+            onPress={() => navigate('DetailBooks', {id: item.id})}>
             <View style={styles.romended}>
               <FastImage
                 style={styles.imageRecomen}
@@ -90,9 +88,7 @@ const Index = ({navigation}) => {
         horizontal={false}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('DetailBooks', {datas: item.id})
-            }>
+            onPress={() => navigate('DetailBooks', {id: item.id})}>
             <View style={styles.popular}>
               <FastImage
                 style={styles.imagesPopular}

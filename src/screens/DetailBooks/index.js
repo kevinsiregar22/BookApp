@@ -24,6 +24,7 @@ const Index = ({route, navigation}) => {
   const {bookdetail} = useSelector(state => state.bookdetail);
   const {isLoading} = useSelector(state => state.Global);
   const {token} = useSelector(state => state.login);
+  const id = route.params.id;
 
   const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ const Index = ({route, navigation}) => {
   const detailBook = async () => {
     try {
       dispatch(setLoading(true));
-      const res = await axios.get(`${BOOKS_API}/${route.params.datas}`, {
+      const res = await axios.get(`${BOOKS_API}/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
