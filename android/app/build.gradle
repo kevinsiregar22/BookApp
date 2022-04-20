@@ -212,7 +212,7 @@ android {
         }
     }
     signingConfigs {
-        debug {
+        release {
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
@@ -220,7 +220,7 @@ android {
         }
     }
     buildTypes {
-        debug {
+        release {
             signingConfig signingConfigs.debug
         }
         release {

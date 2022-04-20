@@ -11,7 +11,7 @@
     "prepare": "husky install",
     "postversion": "react-native-version",
     "published": "np",
-    "build:release": "cd android && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew bundleRelease assembleRelease && cd .."
+    "build:release": "cd android  && ./gradlew bundleRelease assembleRelease && cd .."
   },
   "repository": {
     "type": "git",
