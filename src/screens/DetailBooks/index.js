@@ -120,6 +120,7 @@ const Index = ({route, navigation}) => {
         <Poppins type="Bold" size={16}>
           Overview
         </Poppins>
+
         <Poppins>{bookdetail.synopsis}</Poppins>
       </View>
     </ScrollView>

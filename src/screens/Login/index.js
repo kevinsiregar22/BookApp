@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Alert} from 'react-native';
 import {ms} from 'react-native-size-matters';
 import React from 'react';
 import {Input, Button} from '@rneui/base';
@@ -14,30 +14,40 @@ import {useDispatch, useSelector} from 'react-redux';
 import {API} from '../../config/API';
 import {colors} from '../../utils';
 import {navigate} from '../../helpers/navigate';
+import Poppins from '../../components/Poppins';
+import LogoHeader from '../../components/LogoHeader';
 
 const Index = () => {
   const {email, password, token} = useSelector(state => state.login);
   const dispatch = useDispatch();
 
-  const body = {
-    email: email,
-    password: password, //
+  const checkValid = (email, password) => {
+    if (email.length === 0 && password.length === 0) {
+      Alert.alert('Please fill in the email and password in this form');
+    } else {
+      const body = {
+        email: email, //siregar25v@gmail.com
+        password: password, //siregar25
+      };
+      return body;
+    }
   };
 
   const login = async () => {
     try {
+      const body = checkValid(email, password);
       const res = await axios.post(API.BASE_API.concat('/auth/login'), body);
-      const getToken = () => {
-        dispatch(setToken(res.data.tokens.access.token));
-      };
+
+      dispatch(setToken(res.data.tokens.access.token));
 
       const getName = () => {
         dispatch(setName(res.data.user.name));
       };
       getName();
 
-      if (res.status <= 201) getToken();
-      navigate('Home');
+      if (res.status === 200) {
+        navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,13 +55,14 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
+      <LogoHeader />
       <Input
         inputStyle={{fontSize: 18, paddingVertical: 15}}
         inputContainerStyle={{
-          borderTopWidth: 1,
-          borderBottomWidth: 1,
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
+          borderTopWidth: 2,
+          borderBottomWidth: 2,
+          borderLeftWidth: 2,
+          borderRightWidth: 2,
           borderColor: colors.border.color,
           borderRadius: 10,
         }}
@@ -112,6 +123,7 @@ const Index = () => {
         containerStyle={{
           paddingHorizontal: 10,
           marginTop: 25,
+          marginBottom: 10,
         }}
         titleStyle={{
           fontSize: 24,
@@ -122,10 +134,12 @@ const Index = () => {
         title="LOGIN"
       />
 
-      <Text style={styles.text}>Don't have an account?</Text>
+      <Poppins size={16}>Don't have an account?</Poppins>
 
       <TouchableOpacity onPress={() => navigate('Register')}>
-        <Text style={styles.textregister}>Register</Text>
+        <Poppins type="Bold" size={18}>
+          REGISTER
+        </Poppins>
       </TouchableOpacity>
     </View>
   );
@@ -138,44 +152,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundPage,
     flex: 1,
   },
-  item: {
-    left: ms(40),
-    top: ms(150),
-    width: ms(280),
-    marginBottom: ms(20),
-    borderStyle: 'solid',
-    borderWidth: ms(2),
-    borderRadius: ms(10),
-    borderColor: 'black',
-    fontSize: 20,
-  },
-  text: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: ms(14),
-    marginLeft: ms(100),
-    marginTop: ms(160),
-  },
-  textregister: {
-    // fontWeight: 'bold',
-    color: 'black',
-    fontSize: ms(16),
-    left: ms(138),
-  },
-
-  button: {
-    backgroundColor: 'lightblue',
-    width: ms(260),
-    height: ms(60),
-    borderRadius: ms(5),
+  logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'black',
-    top: ms(150),
-    left: ms(45),
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
+  logo: {
+    width: ms(150),
+    height: ms(150),
   },
 });

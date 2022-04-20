@@ -2,14 +2,15 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   View,
   Alert,
+  Image,
 } from 'react-native';
 import React from 'react';
 import {ms} from 'react-native-size-matters';
 import axios from 'axios';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {
   setRegisterName,
@@ -21,25 +22,44 @@ import {Button, Input} from '@rneui/base';
 import {colors} from '../../utils';
 import {navigate} from '../../helpers/navigate';
 import {API} from '../../config/API';
+import LogoHeader from '../../components/LogoHeader';
+import Poppins from '../../components/Poppins';
 
 const Index = ({navigation}) => {
   const dispatch = useDispatch();
   const {email, password, name} = useSelector(state => state.register);
 
-  const payload = {
-    email: email,
-    password: password,
-    name: name,
+  const checkValid = () => {
+    let regexPass = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+    let regexEmail = new RegExp(
+      '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$',
+    );
+
+    const resRegexPass = regexPass.test(password);
+    const resRegexEmail = regexEmail.test(email);
+
+    if (name.length === 0 && email.length === 0 && password.length === 0) {
+      Alert.alert('Please fill in the name, email and password in this form');
+    } else if (resRegexEmail === !true) {
+      Alert.alert('email format is not valid');
+    } else if (resRegexPass === !true) {
+      Alert.alert('password format is not valid');
+    } else {
+      const body = {
+        name: name,
+        email: email,
+        password: password,
+      };
+      return body;
+    }
   };
 
   const postRegister = async () => {
+    const body = checkValid(name, email, password);
     try {
-      const res = await axios.post(
-        API.BASE_API.concat('/auth/register'),
-        payload,
-      );
+      const res = await axios.post(API.BASE_API.concat('/auth/register'), body);
       console.log(res, 'resul');
-      if (res.status <= 201);
+      if (res.status === 201);
       Alert.alert('Register Succes');
       navigation.navigate('Login');
       // navigation.navigate('Success');
@@ -50,7 +70,8 @@ const Index = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <LogoHeader />
       <Input
         inputStyle={{fontSize: 18, paddingVertical: 15}}
         inputContainerStyle={{
@@ -87,7 +108,6 @@ const Index = ({navigation}) => {
           borderColor: colors.border.color,
           borderRadius: 10,
         }}
-        // containerStyle={{paddingTop: 20, marginTop: 0}}
         leftIconContainerStyle={{
           marginRight: 8,
           marginLeft: 10,
@@ -118,9 +138,6 @@ const Index = ({navigation}) => {
           borderColor: colors.border.color,
           borderRadius: 10,
         }}
-        // containerStyle={{
-        //   marginTop: 7,
-        // }}
         leftIconContainerStyle={{
           marginRight: 8,
           marginLeft: 10,
@@ -145,6 +162,7 @@ const Index = ({navigation}) => {
         containerStyle={{
           paddingHorizontal: 10,
           marginTop: 25,
+          marginBottom: 10,
         }}
         titleStyle={{
           fontSize: 24,
@@ -155,12 +173,14 @@ const Index = ({navigation}) => {
         title="REGISTER"
       />
 
-      <Text style={styles.text}>Don't have an account?</Text>
+      <Poppins size={16}>Already have account ?</Poppins>
 
       <TouchableOpacity onPress={() => navigate('Login')}>
-        <Text style={styles.textlogin}>Login</Text>
+        <Poppins type="Bold" size={18}>
+          LOGIN
+        </Poppins>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -171,48 +191,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundPage,
     flex: 1,
   },
-  logo: {
-    width: ms(200),
-    height: ms(200),
-    marginTop: ms(100),
-    marginLeft: ms(70),
-  },
-  item: {
-    // marginTop: 20,
-    width: ms(280),
-    marginBottom: ms(20),
-    borderStyle: 'solid',
-    borderWidth: ms(2),
-    borderRadius: ms(10),
-    borderColor: 'gray',
-    marginLeft: ms(32),
-    fontSize: 20,
-  },
-  button: {
-    backgroundColor: 'lightblue',
-    width: ms(260),
-    height: ms(60),
+  logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: ms(10),
-    marginLeft: ms(40),
   },
-  buttonText: {
-    color: 'black',
-    fontSize: 20,
-  },
-  text: {
-    color: 'gray',
-    fontWeight: 'bold',
-    fontSize: ms(14),
-    marginLeft: ms(100),
-    marginTop: ms(10),
-  },
-  textlogin: {
-    fontWeight: 'bold',
-    color: 'black',
-    fontSize: ms(16),
-    left: ms(144),
-    // marginTop: ms(10),
+  logo: {
+    width: ms(150),
+    height: ms(150),
   },
 });
